@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Cycle Cravings - Sweet Treats for Your Soul</title>
     <style>
         * {
@@ -12,7 +13,8 @@
             font-family: 'Arial', sans-serif;
         }
 
-        body {
+        html, body {
+            height: 100%;
             background: linear-gradient(135deg, #fff0f5, #ffd1dc);
             color: #4a2c3d;
             line-height: 1.6;
@@ -27,7 +29,7 @@
         }
 
         header h1 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             animation: float 3s ease-in-out infinite;
@@ -45,13 +47,16 @@
             width: 80%;
             border-radius: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         nav a {
             color: #ff69b4;
             text-decoration: none;
-            margin: 0 1.5rem;
-            font-size: 1.2rem;
+            margin: 0.5rem 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             transition: color 0.3s;
         }
 
@@ -62,12 +67,13 @@
         .container {
             max-width: 1200px;
             margin: 2rem auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
+            min-height: calc(100vh - 300px);
         }
 
         .quote {
             text-align: center;
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             color: #ff69b4;
             margin: 2rem 0;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -82,14 +88,14 @@
 
         .treats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
             margin: 2rem 0;
         }
 
         .treat-card {
             background: rgba(255, 255, 255, 0.9);
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -102,23 +108,23 @@
 
         .treat-card img {
             width: 100%;
-            height: 200px;
+            height: 150px;
             object-fit: cover;
             border-radius: 10px;
             transition: opacity 0.5s;
         }
 
         .treat-card h3 {
-            margin: 1rem 0;
+            margin: 0.5rem 0;
             color: #ff1493;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
         }
 
-        .location-finder {
+        .section {
             background: #fff0f5;
             padding: 2rem;
             border-radius: 15px;
             margin: 2rem 0;
-            text-align: center;
         }
 
         .location-finder button {
@@ -127,7 +133,7 @@
             border: none;
             padding: 1rem 2rem;
             border-radius: 25px;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -142,6 +148,26 @@
             background: rgba(255, 182, 193, 0.9);
             color: white;
             width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                min-height: auto;
+            }
+            footer {
+                position: relative;
+            }
+            .treat-card img {
+                height: 120px;
+            }
         }
     </style>
 </head>
@@ -158,37 +184,92 @@
     </nav>
 
     <div class="container">
-        <div class="quote" id="rotating-quote">"Sweetness for the soul"</div>
+        <section id="home" class="section">
+            <div class="quote" id="rotating-quote">"Sweetness for the soul"</div>
+            <p>Welcome to Cycle Cravings, your haven for satisfying those special sweet cravings!</p>
+        </section>
 
-        <section class="treats-grid">
-            <div class="treat-card">
-                <img id="cupcake-img" src="https://via.placeholder.com/300x200.png?text=Cupcakes" alt="Cupcakes">
-                <h3>Heavenly Cupcakes</h3>
-                <p>Fluffy treats with dreamy frosting</p>
-            </div>
-            <div class="treat-card">
-                <img id="cookie-img" src="https://via.placeholder.com/300x200.png?text=Cookies" alt="Cookies">
-                <h3>Chewy Cookies</h3>
-                <p>Warm, gooey comfort in every bite</p>
-            </div>
-            <div class="treat-card">
-                <img id="icecream-img" src="https://via.placeholder.com/300x200.png?text=Ice+Cream" alt="Ice Cream">
-                <h3>Creamy Ice Cream</h3>
-                <p>Cool relief with sweet swirls</p>
-            </div>
-            <div class="treat-card">
-                <img id="candy-img" src="https://via.placeholder.com/300x200.png?text=Candies" alt="Candies">
-                <h3>Sugar Candies</h3>
-                <p>Burst of sweetness to brighten your day</p>
+        <section id="treats" class="section">
+            <h2>Our Sweet Treats</h2>
+            <div class="treats-grid">
+                <!-- Cupcakes -->
+                <div class="treat-card">
+                    <img id="cupcake1-img" src="https://via.placeholder.com/300x200.png?text=Vanilla+Cupcakes" alt="Vanilla Cupcakes">
+                    <h3>Vanilla Cupcakes</h3>
+                    <p>Classic fluffy delight</p>
+                </div>
+                <div class="treat-card">
+                    <img id="cupcake2-img" src="https://via.placeholder.com/300x200.png?text=Chocolate+Cupcakes" alt="Chocolate Cupcakes">
+                    <h3>Chocolate Cupcakes</h3>
+                    <p>Rich cocoa bliss</p>
+                </div>
+                <div class="treat-card">
+                    <img id="cupcake3-img" src="https://via.placeholder.com/300x200.png?text=Red+Velvet+Cupcakes" alt="Red Velvet Cupcakes">
+                    <h3>Red Velvet Cupcakes</h3>
+                    <p>Velvety sweet treat</p>
+                </div>
+                <!-- Cookies -->
+                <div class="treat-card">
+                    <img id="cookie1-img" src="https://via.placeholder.com/300x200.png?text=Choc+Chip+Cookies" alt="Choc Chip Cookies">
+                    <h3>Choc Chip Cookies</h3>
+                    <p>Gooey chocolate chunks</p>
+                </div>
+                <div class="treat-card">
+                    <img id="cookie2-img" src="https://via.placeholder.com/300x200.png?text=Oatmeal+Cookies" alt="Oatmeal Cookies">
+                    <h3>Oatmeal Cookies</h3>
+                    <p>Chewy wholesome bites</p>
+                </div>
+                <div class="treat-card">
+                    <img id="cookie3-img" src="https://via.placeholder.com/300x200.png?text=Sugar+Cookies" alt="Sugar Cookies">
+                    <h3>Sugar Cookies</h3>
+                    <p>Crisp sweet classics</p>
+                </div>
+                <!-- Ice Cream -->
+                <div class="treat-card">
+                    <img id="icecream1-img" src="https://via.placeholder.com/300x200.png?text=Vanilla+Ice+Cream" alt="Vanilla Ice Cream">
+                    <h3>Vanilla Ice Cream</h3>
+                    <p>Creamy cool comfort</p>
+                </div>
+                <div class="treat-card">
+                    <img id="icecream2-img" src="https://via.placeholder.com/300x200.png?text=Strawberry+Ice+Cream" alt="Strawberry Ice Cream">
+                    <h3>Strawberry Ice Cream</h3>
+                    <p>Fruity sweet swirls</p>
+                </div>
+                <div class="treat-card">
+                    <img id="icecream3-img" src="https://via.placeholder.com/300x200.png?text=Choc+Mint+Ice+Cream" alt="Choc Mint Ice Cream">
+                    <h3>Choc Mint Ice Cream</h3>
+                    <p>Refreshing indulgence</p>
+                </div>
+                <!-- Candies -->
+                <div class="treat-card">
+                    <img id="candy1-img" src="https://via.placeholder.com/300x200.png?text=Gummy+Bears" alt="Gummy Bears">
+                    <h3>Gummy Bears</h3>
+                    <p>Chewy colorful fun</p>
+                </div>
+                <div class="treat-card">
+                    <img id="candy2-img" src="https://via.placeholder.com/300x200.png?text=Lollipops" alt="Lollipops">
+                    <h3>Lollipops</h3>
+                    <p>Swirly sweet pops</p>
+                </div>
+                <div class="treat-card">
+                    <img id="candy3-img" src="https://via.placeholder.com/300x200.png?text=Choc+Truffles" alt="Choc Truffles">
+                    <h3>Choc Truffles</h3>
+                    <p>Decadent bites</p>
+                </div>
             </div>
         </section>
 
-        <section class="location-finder">
-            <h2>Find Sweet Spots Near You</h2>
-            <p>Sync your location to discover nearby treat havens!</p>
+        <section id="locations" class="section location-finder">
+            <h2>Find Sweet Shops Near You</h2>
+            <p>Discover nearby candy stores, ice cream parlors, and bakeries!</p>
             <button onclick="getLocation()">Find My Location</button>
             <p id="location-result"></p>
             <div id="map" style="height: 300px; margin-top: 1rem; display: none;"></div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>About Cycle Cravings</h2>
+            <p>Cycle Cravings is your go-to website for satisfying women's sweetest cravings, especially during that time of the month. We showcase a variety of treats like cupcakes, cookies, ice cream, and candies, paired with uplifting quotes to brighten your day. Our mission is to bring comfort and joy through sweetness, with a location sync feature to find nearby treat spots. Indulge, uplift, and enjoy!</p>
         </section>
     </div>
 
@@ -206,7 +287,7 @@
             "Because you deserve sweetness"
         ];
         let quoteIndex = 0;
-        
+
         function rotateQuote() {
             const quoteElement = document.getElementById('rotating-quote');
             quoteElement.style.opacity = 0;
@@ -219,21 +300,27 @@
 
         // Simulated AI Image Rotation
         const imageVariations = {
-            cupcake: ["Cupcakes", "Frosted Cupcakes", "Pink Cupcakes"],
-            cookie: ["Cookies", "Chocolate Cookies", "Soft Cookies"],
-            icecream: ["Ice Cream", "Swirl Ice Cream", "Cone Ice Cream"],
-            candy: ["Candies", "Colorful Candies", "Gummy Candies"]
+            cupcake1: ["Vanilla Cupcakes", "Frosted Cupcakes", "Pink Cupcakes"],
+            cupcake2: ["Chocolate Cupcakes", "Mocha Cupcakes", "Choc Swirl Cupcakes"],
+            cupcake3: ["Red Velvet Cupcakes", "Berry Cupcakes", "Cream Cheese Cupcakes"],
+            cookie1: ["Choc Chip Cookies", "Double Choc Cookies", "Choc Drizzle Cookies"],
+            cookie2: ["Oatmeal Cookies", "Raisin Oat Cookies", "Honey Oat Cookies"],
+            cookie3: ["Sugar Cookies", "Sprinkle Cookies", "Lemon Sugar Cookies"],
+            icecream1: ["Vanilla Ice Cream", "Vanilla Bean Ice Cream", "French Vanilla Ice Cream"],
+            icecream2: ["Strawberry Ice Cream", "Berry Swirl Ice Cream", "Strawberry Chunk Ice Cream"],
+            icecream3: ["Choc Mint Ice Cream", "Mint Chip Ice Cream", "Dark Choc Mint Ice Cream"],
+            candy1: ["Gummy Bears", "Gummy Worms", "Sour Gummy Bears"],
+            candy2: ["Lollipops", "Swirl Lollipops", "Fruit Lollipops"],
+            candy3: ["Choc Truffles", "Caramel Truffles", "White Choc Truffles"]
         };
 
         function rotateImages() {
-            const types = ['cupcake', 'cookie', 'icecream', 'candy'];
-            types.forEach(type => {
+            Object.keys(imageVariations).forEach(type => {
                 const imgElement = document.getElementById(`${type}-img`);
                 const variations = imageVariations[type];
                 const randomVariation = variations[Math.floor(Math.random() * variations.length)];
                 imgElement.style.opacity = 0;
                 setTimeout(() => {
-                    // Simulate AI-generated image URL
                     imgElement.src = `https://via.placeholder.com/300x200.png?text=${randomVariation}`;
                     imgElement.alt = randomVariation;
                     imgElement.style.opacity = 1;
@@ -241,7 +328,7 @@
             });
         }
 
-        // Location Finder with Simulated Map
+        // Location Finder with Sweet Shop Focus
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -255,16 +342,16 @@
             const lon = position.coords.longitude;
             const result = document.getElementById("location-result");
             const mapDiv = document.getElementById("map");
-            
-            result.innerHTML = `Finding sweet spots near: Latitude ${lat.toFixed(2)}, Longitude ${lon.toFixed(2)}`;
+
+            result.innerHTML = `Finding sweet shops near: Latitude ${lat.toFixed(2)}, Longitude ${lon.toFixed(2)}`;
             mapDiv.style.display = "block";
             mapDiv.innerHTML = `<div style="width: 100%; height: 100%; background: #ffe4e1; border-radius: 10px;">
                 Simulated Map (Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed(2)})
-                <br>Imagine a real map with sweet shops here!</div>`;
-            
-            // Simulated nearby stores
+                <br>Candy stores, ice cream parlors, and bakeries nearby!</div>`;
+
+            // Simulated nearby sweet shops
             setTimeout(() => {
-                result.innerHTML += "<br>Nearby: Sweet Haven (0.5mi), Sugar Bliss (1.2mi)";
+                result.innerHTML += "<br>Nearby: Candy Cloud (0.3mi), Ice Cream Dream (0.7mi), Sweet Bake Shop (1.1mi)";
             }, 1000);
         }
 
@@ -272,7 +359,7 @@
             const result = document.getElementById("location-result");
             switch(error.code) {
                 case error.PERMISSION_DENIED:
-                    result.innerHTML = "Please allow location access to find nearby stores.";
+                    result.innerHTML = "Please allow location access to find nearby sweet shops.";
                     break;
                 case error.POSITION_UNAVAILABLE:
                     result.innerHTML = "Location information is unavailable.";
@@ -294,6 +381,15 @@
 
         // Initial call to set first variation
         rotateImages();
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
