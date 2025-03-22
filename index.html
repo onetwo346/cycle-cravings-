@@ -19,12 +19,10 @@
             overflow-x: hidden;
         }
 
-        /* Header Styling */
         header {
             background: rgba(255, 182, 193, 0.9);
             padding: 2rem;
             text-align: center;
-            position: relative;
             border-bottom: 5px solid #ff85a1;
         }
 
@@ -35,13 +33,11 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        /* Floating Animation */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        /* Navigation */
         nav {
             padding: 1rem;
             background: rgba(255, 255, 255, 0.8);
@@ -63,7 +59,6 @@
             color: #ff1493;
         }
 
-        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 2rem auto;
@@ -77,6 +72,7 @@
             margin: 2rem 0;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
             animation: fadeIn 2s ease-in;
+            transition: opacity 0.5s;
         }
 
         @keyframes fadeIn {
@@ -84,7 +80,6 @@
             to { opacity: 1; }
         }
 
-        /* Treats Grid */
         .treats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -110,6 +105,7 @@
             height: 200px;
             object-fit: cover;
             border-radius: 10px;
+            transition: opacity 0.5s;
         }
 
         .treat-card h3 {
@@ -117,7 +113,6 @@
             color: #ff1493;
         }
 
-        /* Location Finder */
         .location-finder {
             background: #fff0f5;
             padding: 2rem;
@@ -141,14 +136,11 @@
             background: #ff1493;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
             background: rgba(255, 182, 193, 0.9);
             color: white;
-            position: relative;
-            bottom: 0;
             width: 100%;
         }
     </style>
@@ -166,28 +158,26 @@
     </nav>
 
     <div class="container">
-        <div class="quote">
-            "Sweetness for the soul"
-        </div>
+        <div class="quote" id="rotating-quote">"Sweetness for the soul"</div>
 
         <section class="treats-grid">
             <div class="treat-card">
-                <img src="https://via.placeholder.com/300x200.png?text=Cupcakes" alt="Cupcakes">
+                <img id="cupcake-img" src="https://via.placeholder.com/300x200.png?text=Cupcakes" alt="Cupcakes">
                 <h3>Heavenly Cupcakes</h3>
                 <p>Fluffy treats with dreamy frosting</p>
             </div>
             <div class="treat-card">
-                <img src="https://via.placeholder.com/300x200.png?text=Cookies" alt="Cookies">
+                <img id="cookie-img" src="https://via.placeholder.com/300x200.png?text=Cookies" alt="Cookies">
                 <h3>Chewy Cookies</h3>
                 <p>Warm, gooey comfort in every bite</p>
             </div>
             <div class="treat-card">
-                <img src="https://via.placeholder.com/300x200.png?text=Ice+Cream" alt="Ice Cream">
+                <img id="icecream-img" src="https://via.placeholder.com/300x200.png?text=Ice+Cream" alt="Ice Cream">
                 <h3>Creamy Ice Cream</h3>
                 <p>Cool relief with sweet swirls</p>
             </div>
             <div class="treat-card">
-                <img src="https://via.placeholder.com/300x200.png?text=Candies" alt="Candies">
+                <img id="candy-img" src="https://via.placeholder.com/300x200.png?text=Candies" alt="Candies">
                 <h3>Sugar Candies</h3>
                 <p>Burst of sweetness to brighten your day</p>
             </div>
@@ -198,14 +188,60 @@
             <p>Sync your location to discover nearby treat havens!</p>
             <button onclick="getLocation()">Find My Location</button>
             <p id="location-result"></p>
+            <div id="map" style="height: 300px; margin-top: 1rem; display: none;"></div>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2025 Cycle Cravings - Satisfying Your Sweetest Moments</p>
+        <p>© 2025 Cycle Cravings - Satisfying Your Sweetest Moments</p>
     </footer>
 
     <script>
+        // Rotating Quotes
+        const quotes = [
+            "Sweetness for the soul",
+            "A treat for every craving",
+            "Indulgence is self-love",
+            "Sweets that heal the heart",
+            "Because you deserve sweetness"
+        ];
+        let quoteIndex = 0;
+        
+        function rotateQuote() {
+            const quoteElement = document.getElementById('rotating-quote');
+            quoteElement.style.opacity = 0;
+            setTimeout(() => {
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+                quoteElement.textContent = quotes[quoteIndex];
+                quoteElement.style.opacity = 1;
+            }, 500);
+        }
+
+        // Simulated AI Image Rotation
+        const imageVariations = {
+            cupcake: ["Cupcakes", "Frosted Cupcakes", "Pink Cupcakes"],
+            cookie: ["Cookies", "Chocolate Cookies", "Soft Cookies"],
+            icecream: ["Ice Cream", "Swirl Ice Cream", "Cone Ice Cream"],
+            candy: ["Candies", "Colorful Candies", "Gummy Candies"]
+        };
+
+        function rotateImages() {
+            const types = ['cupcake', 'cookie', 'icecream', 'candy'];
+            types.forEach(type => {
+                const imgElement = document.getElementById(`${type}-img`);
+                const variations = imageVariations[type];
+                const randomVariation = variations[Math.floor(Math.random() * variations.length)];
+                imgElement.style.opacity = 0;
+                setTimeout(() => {
+                    // Simulate AI-generated image URL
+                    imgElement.src = `https://via.placeholder.com/300x200.png?text=${randomVariation}`;
+                    imgElement.alt = randomVariation;
+                    imgElement.style.opacity = 1;
+                }, 500);
+            });
+        }
+
+        // Location Finder with Simulated Map
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -215,28 +251,49 @@
         }
 
         function showPosition(position) {
-            document.getElementById("location-result").innerHTML = 
-                "Finding sweet spots near: Latitude " + position.coords.latitude + 
-                ", Longitude " + position.coords.longitude;
-            // In a real implementation, this would query a database of stores
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const result = document.getElementById("location-result");
+            const mapDiv = document.getElementById("map");
+            
+            result.innerHTML = `Finding sweet spots near: Latitude ${lat.toFixed(2)}, Longitude ${lon.toFixed(2)}`;
+            mapDiv.style.display = "block";
+            mapDiv.innerHTML = `<div style="width: 100%; height: 100%; background: #ffe4e1; border-radius: 10px;">
+                Simulated Map (Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed(2)})
+                <br>Imagine a real map with sweet shops here!</div>`;
+            
+            // Simulated nearby stores
+            setTimeout(() => {
+                result.innerHTML += "<br>Nearby: Sweet Haven (0.5mi), Sugar Bliss (1.2mi)";
+            }, 1000);
         }
 
         function showError(error) {
+            const result = document.getElementById("location-result");
             switch(error.code) {
                 case error.PERMISSION_DENIED:
-                    document.getElementById("location-result").innerHTML = "Please allow location access to find nearby stores.";
+                    result.innerHTML = "Please allow location access to find nearby stores.";
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    document.getElementById("location-result").innerHTML = "Location information is unavailable.";
+                    result.innerHTML = "Location information is unavailable.";
                     break;
                 case error.TIMEOUT:
-                    document.getElementById("location-result").innerHTML = "The request to get location timed out.";
+                    result.innerHTML = "The request to get location timed out.";
                     break;
                 default:
-                    document.getElementById("location-result").innerHTML = "An unknown error occurred.";
+                    result.innerHTML = "An unknown error occurred.";
                     break;
             }
         }
+
+        // Start rotations every 30 seconds
+        setInterval(() => {
+            rotateQuote();
+            rotateImages();
+        }, 30000);
+
+        // Initial call to set first variation
+        rotateImages();
     </script>
 </body>
 </html>
